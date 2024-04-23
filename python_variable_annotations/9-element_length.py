@@ -3,8 +3,11 @@
                  return values with the appropriate types
     Arguments: lst: Iterable[Sequence]
 '''
-from typing import Iterable, Sequence, List, Tuple
+from typing import Iterable, Sequence, Tuple, List
+
 
 def element_length(lst: Iterable[Sequence]) -> List[Tuple[Sequence, int]]:
-    """Returns a list of tuples containing elements and their lengths."""
+    '''Return list of tuples, one for each element, of which
+       consists of the element itself and its length.
+    '''
     return [(i, len(i)) for i in lst]
