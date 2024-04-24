@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""
-    Type-annotated function add that concats 'str1' and
-    float 'str2' as a single str
-"""
+''' Description: takes a string str1 and a string str2 as arguments
+    and returns a concatenated string
+    arguments: str1: str
+               str2: str
+'''
+
 
 def concat(str1: str, str2: str) -> str:
-    """Concatenates two strings and returns the result."""
+    """Concatenates two strings."""
     return str1 + str2

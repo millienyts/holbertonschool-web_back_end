@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""
-    Type-annotated function add that takes float 'n'
-    and returns the floor of the float as int
-"""
-import math
+''' Description:takes a float n as argument and returns the floor of the float
+    Arguments: n: float
+'''
+
 
 def floor(n: float) -> int:
-    """Returns the floor of a float."""
-    return math.floor(n)
+    """Returns the floor of the float."""
+    return int(n)
