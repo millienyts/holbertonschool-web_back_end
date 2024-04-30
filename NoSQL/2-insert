@@ -1,0 +1,2 @@
+// Script to create a doc and insert data
+db.school.insert({name: 'Holberton school'})
