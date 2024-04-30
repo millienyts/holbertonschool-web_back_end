@@ -1,3 +1,2 @@
-// A simplescript to start mongoDB and list dbs
-
+// List all databases
 show dbs
