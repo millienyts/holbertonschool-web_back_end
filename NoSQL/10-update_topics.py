@@ -10,9 +10,11 @@ def update_topics(mongo_collection, name, topics):
     '''
     # Check if mongo_collection is None
     if mongo_collection is None:
+        # Return None if collection is None
         return None
     else:
+        # Update the document
         mongo_collection.update_many(
             {"name": name}, {"$set": {"topics": topics}})
-
+        # Return None
         return None

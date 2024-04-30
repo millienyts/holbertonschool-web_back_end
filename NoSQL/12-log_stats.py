@@ -4,6 +4,7 @@
 '''
 from pymongo import MongoClient
 
+
 if __name__ == "__main__":
     '''
         Function that provides some stats about Nginx logs stored in MongoDB
@@ -13,16 +14,16 @@ if __name__ == "__main__":
     collection = client.logs.nginx
 
     # Number of documents
-    num_logs = collection.estimated_document_count()
-    print(f"{num_logs} logs")
+    print(f"{collection.estimated_document_count()} logs")
 
     # Number of methods
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     print("Methods:")
-    for method in methods:
+    for method in ["GET", "POST", "PUT", "PATCH", "DELETE"]:
         count = collection.count_documents({"method": method})
+        # Print only if there are logs for that method
         print(f"\tmethod {method}: {count}")
 
     # Check status
-    status_check = collection.count_documents({"method": "GET", "path": "/status"})
-    print(f"{status_check} status check")
+    get = collection.count_documents({"method": "GET", "path": "/status"})
+    # Print only if there are logs for that method
+    print(f"{get} status check")
