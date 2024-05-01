@@ -6,7 +6,6 @@ Deletion-resilient hypermedia pagination
 import csv
 import math
 from typing import List, Dict
-from 0_simple_helper_function import index_range
 
 class Server:
     """Server class to paginate a database of popular baby names."""
@@ -29,35 +28,45 @@ class Server:
         """Dataset indexed by sorting position, starting at 0"""
         if self.__indexed_dataset is None:
             dataset = self.dataset()
-            truncated_dataset = dataset[:1000]  # Assuming only the first 1000 rows are indexed
+            truncated_dataset = dataset[:1000]
             self.__indexed_dataset = {i: dataset[i] for i in range(len(dataset))}
         return self.__indexed_dataset
 
     def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
-        """Return hypermedia metadata based on the index."""
-        assert index is None or isinstance(index, int) and index >= 0, "Index must be a non-negative integer"
-        assert isinstance(page_size, int) and page_size > 0, "Page size must be a positive integer"
+        """
+        Return hypermedia pagination information based on the index.
 
-        dataset = self.indexed_dataset()
-        total_items = len(dataset)
-        total_pages = math.ceil(total_items / page_size)
+        Args:
+            index: The current start index of the return page.
+            page_size: The current page size.
 
-        if index is None:
-            index = 0
-        elif index >= total_items:
-            index = total_items - 1
+        Returns:
+            A dictionary containing pagination information.
+        """
+        hyper_data = self.indexed_dataset()
 
-        start = index
-        end = min(index + page_size, total_items)
+        assert type(index) == int and type(page_size) == int
+        assert 0 <= index < len(hyper_data)
 
-        data = [dataset[i] for i in range(start, end)]
-        next_index = end if end < total_items else None
+        next_index = index + page_size
+        i = index
+        data = []
+        while i < next_index and next_index <= len(hyper_data):
+
+            if hyper_data.get(i):
+                data.append(hyper_data[i])
+                i += 1
+            else:
+                # Skip empty row and increase by one the last index
+                if next_index < len(hyper_data):
+                    i += 1
+                    next_index += 1
 
         return {
-            "index": start,
-            "next_index": next_index,
-            "page_size": len(data),
-            "data": data,
+            'index': index,
+            'data': data,
+            'page_size': len(data),
+            'next_index': next_index
         }
 
 if __name__ == "__main__":
